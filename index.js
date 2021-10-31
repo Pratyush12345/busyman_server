@@ -16,7 +16,7 @@ const twitterApi = new twit({
 
 
 function fetchAllUserData(){
-    axios.get('https://us-central1-trainmode-fc310.cloudfunctions.net/restApiUser/getUserData').then((response)=>{
+    axios.get('https://us-central1-busymen-f8267.cloudfunctions.net/restApiUser/getUserData').then((response)=>{
     let followList = ""
     let userList = [] 
     userList = response.data

@@ -77,14 +77,17 @@ app.get("/", (req, res)=>{
 
 app.get("/onUserCreate", (req, res)=>{
     console.log("New User Created")
+    res.status(200).send("User Created");
 })
 
 app.get("/onUserDelete", (req, res)=>{
     console.log("User Deleted")
+    res.status(200).send("User Deleted");
 })
 
 app.get("/onUserUpdate", (req, res)=>{
     console.log("User Updated")
+    res.status(200).send("User Updated");
 })
 
 app.listen(port , (req, res)=>{

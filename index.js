@@ -14,6 +14,7 @@ const twitterApi = new twit({
     timeout_ms : 60 * 1000
 })
 
+var stream
 
 function fetchAllUserData(){
     axios.get('https://us-central1-busymen-f8267.cloudfunctions.net/restApiUser/getUserData').then((response)=>{
@@ -33,7 +34,7 @@ function fetchAllUserData(){
         
         console.log(followList)  
  
-        var stream  = twitterApi.stream('statuses/filter', {
+        stream  = twitterApi.stream('statuses/filter', {
             follow: followList
         })
         
@@ -71,22 +72,30 @@ function fetchAllUserData(){
     })   
 }
 
+function crudoperation(){
+    stream.
+    fetchAllUserData()
+}
+
 app.get("/", (req, res)=>{
     res.status(200).send("Hello From BusyMan");
 })
 
 app.get("/onUserCreate", (req, res)=>{
     console.log("New User Created")
+    crudoperation()
     res.status(200).send("User Created");
 })
 
 app.get("/onUserDelete", (req, res)=>{
     console.log("User Deleted")
+    crudoperation()
     res.status(200).send("User Deleted");
 })
 
 app.get("/onUserUpdate", (req, res)=>{
     console.log("User Updated")
+    crudoperation()
     res.status(200).send("User Updated");
 })
 

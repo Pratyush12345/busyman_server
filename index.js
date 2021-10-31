@@ -68,7 +68,15 @@ function fetchAllUserData(){
 
           
          
-        })   
+        })  
+        
+        stream.on("disconnect", (disconnectmsg)=>{
+          stream.start()
+        })
+
+        stream.on("warning", (warning)=>{
+            stream.start()
+          })
     })   
 }
 

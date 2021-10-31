@@ -90,13 +90,12 @@ app.get("/onUserCreate", (req, res)=>{
 app.get("/onUserDelete", (req, res)=>{
     console.log("User Deleted")
     stream.stop()
-    
     res.status(200).send("User Deleted");
 })
 
 app.get("/onUserUpdate", (req, res)=>{
     console.log("User Updated")
-    fetchAllUserData()
+    crudoperation()
     res.status(200).send("User Updated");
 })
 

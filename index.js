@@ -73,7 +73,7 @@ function fetchAllUserData(){
 }
 
 function crudoperation(){
-    stream.
+    stream.stop()
     fetchAllUserData()
 }
 
@@ -89,13 +89,14 @@ app.get("/onUserCreate", (req, res)=>{
 
 app.get("/onUserDelete", (req, res)=>{
     console.log("User Deleted")
-    crudoperation()
+    stream.stop()
+    
     res.status(200).send("User Deleted");
 })
 
 app.get("/onUserUpdate", (req, res)=>{
     console.log("User Updated")
-    crudoperation()
+    fetchAllUserData()
     res.status(200).send("User Updated");
 })
 

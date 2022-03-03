@@ -62,7 +62,16 @@ function fetchAllUserData(){
                 (err, data, res)=>{
                     console.log("Retweeted");
                 }
-            ) 
+            )
+            
+            retweetCred.post("favorites/create",{
+                id: tweet.id_str
+                },
+            
+                (err, data, res)=>{
+                    console.log("Retweeted");
+                }
+            )
             }
           });
 

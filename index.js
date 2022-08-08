@@ -33,7 +33,7 @@ function fetchAllUserData(){
         followList = "1"
         
         console.log(followList)  
- 
+        
         stream  = twitterApi.stream('statuses/filter', {
             follow: followList
         })
@@ -52,7 +52,7 @@ function fetchAllUserData(){
                 consumer_secret : "vomHhRkABsllgCPRuuqYw6DB5l3pjkBmTRIlAhpE09Mp7ktOSt",
                 access_token : element.data.AcessToken,
                 access_token_secret : element.data.AcessTokenSecret,
-                timeout_ms : 60 * 1000
+                timeout_ms : 60 * 500
             })
 
             retweetCred.post("statuses/retweet/:id",{

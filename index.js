@@ -41,39 +41,139 @@ function fetchAllUserData(){
         stream.on('tweet', (tweet)=>{
           console.log("tweet captured") 
           console.log(tweet)
-          
-          userList.forEach(element => {
-            console.log(element.data.RetweetId)
-            console.log(tweet.user.id_str)
-            if(element.data.RetweetId.includes(tweet.user.id_str)){
-             console.log("Tweets equal")   
-            var retweetCred = new twit({
-                consumer_key : "n58AlgPKH47GIWrmR3eH4vE8z" ,
-                consumer_secret : "vomHhRkABsllgCPRuuqYw6DB5l3pjkBmTRIlAhpE09Mp7ktOSt",
-                access_token : element.data.AcessToken,
-                access_token_secret : element.data.AcessTokenSecret,
-                timeout_ms : 60 * 500
-            })
+          var dummyUserList = []
 
-            retweetCred.post("statuses/retweet/:id",{
-                id: tweet.id_str
-                },
-            
-                (err, data, res)=>{
-                    console.log("Retweeted");
-                }
-            )
-            
-            retweetCred.post("favorites/create",{
-                id: tweet.id_str
-                },
-            
-                (err, data, res)=>{
-                    console.log("Retweeted");
-                }
-            )
+          userList.forEach(element => {
+            if(element.data.RetweetId.includes(tweet.user.id_str)){
+                dummyUserList.push(element)
             }
           });
+
+            var localUserList = []
+
+            var count  = -1;
+
+            var timer = setInterval(()=>{
+            count++;
+            console.log(count)
+            var totalUserLength
+            
+            if(count == 0){
+                totalUserLength = dummyUserList.length 
+                localUserList = dummyUserList.slice()
+            }
+            else{
+                totalUserLength = localUserList.length
+            }
+            
+            if(totalUserLength>3){
+                
+                for(var i =0; i<3;i++){
+                    console.log("retweet happen" + localUserList[0])    
+                    if(localUserList[0].data.RetweetId.includes(tweet.user.id_str)){
+                        //console.log("Tweets equal")   
+                       var retweetCred = new twit({
+                           consumer_key : "n58AlgPKH47GIWrmR3eH4vE8z" ,
+                           consumer_secret : "vomHhRkABsllgCPRuuqYw6DB5l3pjkBmTRIlAhpE09Mp7ktOSt",
+                           access_token : localUserList[0].data.AcessToken,
+                           access_token_secret : localUserList[0].data.AcessTokenSecret,
+                           timeout_ms : 60 * 500
+                       })
+           
+                       retweetCred.post("statuses/retweet/:id",{
+                           id: tweet.id_str
+                           },
+                       
+                           (err, data, res)=>{
+                               console.log("Retweeted");
+                           }
+                       )
+                       
+                       retweetCred.post("favorites/create",{
+                           id: tweet.id_str
+                           },
+                       
+                           (err, data, res)=>{
+                               console.log("Retweeted");
+                           }
+                       )
+                       }
+
+                    localUserList.shift()
+                    //console.log(localUserList)
+                }
+                //   userList.forEach(ele=>{
+                //   })
+                
+            }
+            else{
+                localUserList.forEach(ele=>{
+                //console.log("remaining tweet happen"+ ele)
+                if(ele.data.RetweetId.includes(tweet.user.id_str)){
+                    //console.log("Tweets equal")   
+                   var retweetCred = new twit({
+                       consumer_key : "n58AlgPKH47GIWrmR3eH4vE8z" ,
+                       consumer_secret : "vomHhRkABsllgCPRuuqYw6DB5l3pjkBmTRIlAhpE09Mp7ktOSt",
+                       access_token : ele.data.AcessToken,
+                       access_token_secret : ele.data.AcessTokenSecret,
+                       timeout_ms : 60 * 500
+                   })
+       
+                   retweetCred.post("statuses/retweet/:id",{
+                       id: tweet.id_str
+                       },
+                   
+                       (err, data, res)=>{
+                           console.log("Retweeted");
+                       }
+                   )
+                   
+                   retweetCred.post("favorites/create",{
+                       id: tweet.id_str
+                       },
+                   
+                       (err, data, res)=>{
+                           console.log("Retweeted");
+                       }
+                   )
+                   }
+                })
+                localUserList = []
+                clearInterval(timer)
+            }
+            },180000)
+        //   userList.forEach(element => {
+        //     console.log(element.data.RetweetId)
+        //     console.log(tweet.user.id_str)
+        //     if(element.data.RetweetId.includes(tweet.user.id_str)){
+        //      console.log("Tweets equal")   
+        //     var retweetCred = new twit({
+        //         consumer_key : "n58AlgPKH47GIWrmR3eH4vE8z" ,
+        //         consumer_secret : "vomHhRkABsllgCPRuuqYw6DB5l3pjkBmTRIlAhpE09Mp7ktOSt",
+        //         access_token : element.data.AcessToken,
+        //         access_token_secret : element.data.AcessTokenSecret,
+        //         timeout_ms : 60 * 500
+        //     })
+
+        //     retweetCred.post("statuses/retweet/:id",{
+        //         id: tweet.id_str
+        //         },
+            
+        //         (err, data, res)=>{
+        //             console.log("Retweeted");
+        //         }
+        //     )
+            
+        //     retweetCred.post("favorites/create",{
+        //         id: tweet.id_str
+        //         },
+            
+        //         (err, data, res)=>{
+        //             console.log("Retweeted");
+        //         }
+        //     )
+        //     }
+        //   });
 
           
          
@@ -108,6 +208,10 @@ app.get("/onUserDelete", (req, res)=>{
     console.log("User Deleted")
     stream.stop()
     res.status(200).send("User Deleted");
+})
+
+app.get("/getVersion", (req, res)=>{
+    res.status(200).send("version 2");
 })
 
 app.get("/onUserUpdate", (req, res)=>{

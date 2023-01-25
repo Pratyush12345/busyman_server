@@ -23,7 +23,7 @@ function fetchAllUserData(){
     userList = response.data
     
     userList.forEach(element => {
-        console.log(element.data.RetweetId)
+        //console.log(element.data.RetweetId)
             
         followList = followList + element.data.RetweetId 
         });
@@ -32,15 +32,15 @@ function fetchAllUserData(){
         if(followList==="")
         followList = "1"
         
-        console.log(followList)  
+        //console.log(followList)  
         
         stream  = twitterApi.stream('statuses/filter', {
             follow: followList
         })
         
         stream.on('tweet', (tweet)=>{
-          console.log("tweet captured") 
-          console.log(tweet)
+          //console.log("tweet captured") 
+          //console.log(tweet)
           var dummyUserList = []
 
           userList.forEach(element => {
@@ -55,7 +55,7 @@ function fetchAllUserData(){
 
             var timer = setInterval(()=>{
             count++;
-            console.log(count)
+            //console.log(count)
             var totalUserLength
             
             if(count == 0){
@@ -69,7 +69,7 @@ function fetchAllUserData(){
             if(totalUserLength>3){
                 
                 for(var i =0; i<3;i++){
-                    console.log("retweet happen" + localUserList[0])    
+                    //console.log("retweet happen" + localUserList[0])    
                     if(localUserList[0].data.RetweetId.includes(tweet.user.id_str)){
                         //console.log("Tweets equal")   
                        var retweetCred = new twit({
